@@ -1,0 +1,15 @@
+{% extends 'coins/base.html' %}
+{% block content %}
+    <h1>Coins List</h1>
+    
+    {% for coin in coins %}
+        <div>
+            <div>
+                <span><h3>{{ coin.name }}</h3></span>
+                <p>{{ coin.symbol }}</p>
+                <p>${{ coin.price }}</p></p>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
