@@ -1,6 +1,6 @@
 {% extends 'coins/base.html' %}
 {% block content %}
-<h1 class="text-4xl">Coin Details</h1>
+<h1 class="text-4xl mb-10 ml-8 mt-5">Coin Details</h1>
 
 <div>
     <span><h3>{{ coin.name }}</h3></span>
@@ -9,8 +9,8 @@
     <p>{{ coin.description }}</p>
 </div>
 <div>
-    <a href="{% url 'coins_update' coin.id %}">Edit</a>
-    <a href="{% url 'coins_delete' coin.id %}">Delete</a>
+    <a href="{% url 'coins_update' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Edit</a>
+    <a href="{% url 'coins_delete' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Delete</a>
 </div>
 
 

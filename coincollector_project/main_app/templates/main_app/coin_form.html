@@ -2,16 +2,16 @@
 
 {% block content %}
   {% if object %}
-    <h1 class="text-4xl">Edit <span>{{object.name}}</span></h1>
+    <h1 class="text-4xl mb-10 ml-8 mt-5">Edit <span>{{object.name}}</span></h1>
   {% else %}
-    <h1 class="text-4xl">Add Coin</h1>
+    <h1 class="text-4xl mb-10 ml-8 mt-5">Add Coin</h1>
   {% endif %}
 
   <form action="" method="POST">
     {% csrf_token %}
-    <table>
+    <table class="ml-12 mb-10">
       {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit!" class="btn">
+    <input class="ml-72 text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded" type="submit" value="Submit!">
   </form>
 {% endblock %}

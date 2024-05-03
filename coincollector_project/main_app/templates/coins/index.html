@@ -1,12 +1,12 @@
 {% extends 'coins/base.html' %}
 {% block content %}
-    <h1 class="text-4xl">Coins List</h1>
+    <h1 class="text-4xl mb-8 ml-8 mt-5">Coins List</h1>
     
     {% for coin in coins %}
         <div>
             <a href="{% url 'detail' coin.id %}">
-                <div>
-                    <span><h3>{{ coin.name }}</h3></span>
+                <div class="mb-8 ml-10 py-2 px-4 bg-white opacity-80 rounded border border-blue-800">
+                    <span class="text-2xl">{{ coin.name }}</span>
                     <p>{{ coin.symbol }}</p>
                     <p>${{ coin.price }}</p></p>
                     <p>{{ coin.description }}</p>
