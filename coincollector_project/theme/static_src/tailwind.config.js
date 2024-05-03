@@ -42,7 +42,11 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: theme => ({
+                'square-pattern': "url('https://www.transparenttextures.com/patterns/bright-squares.png')",
+            })
+        },
     },
     plugins: [
         /**

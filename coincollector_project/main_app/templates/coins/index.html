@@ -1,14 +1,17 @@
 {% extends 'coins/base.html' %}
 {% block content %}
-    <h1>Coins List</h1>
+    <h1 class="text-4xl">Coins List</h1>
     
     {% for coin in coins %}
         <div>
-            <div>
-                <span><h3>{{ coin.name }}</h3></span>
-                <p>{{ coin.symbol }}</p>
-                <p>${{ coin.price }}</p></p>
-            </div>
+            <a href="{% url 'detail' coin.id %}">
+                <div>
+                    <span><h3>{{ coin.name }}</h3></span>
+                    <p>{{ coin.symbol }}</p>
+                    <p>${{ coin.price }}</p></p>
+                    <p>{{ coin.description }}</p>
+                </div>
+            </a>
         </div>
     {% endfor %}
 

@@ -1,0 +1,17 @@
+{% extends 'coins/base.html' %}
+{% block content %}
+<h1 class="text-4xl">Coin Details</h1>
+
+<div>
+    <span><h3>{{ coin.name }}</h3></span>
+    <p>{{ coin.symbol }}</p>
+    <p>${{ coin.price }}</p></p>
+    <p>{{ coin.description }}</p>
+</div>
+<div>
+    <a href="{% url 'coins_update' coin.id %}">Edit</a>
+    <a href="{% url 'coins_delete' coin.id %}">Delete</a>
+</div>
+
+
+{% endblock %}

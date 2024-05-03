@@ -14,21 +14,22 @@
   {% tailwind_css %}
 
 </head>
-<body class="bg-green-50">
+<body class="bg-blue-700 bg-square-pattern min-h-screen flex flex-col">
   <header>
     <nav>
-      <div>
+      <div class="flex justify-around">
         <ul>
-          <li class="text-blue-600"><a href="/">Coin Collector</a></li>
+          <li class="text-5xl"><a href="{% url 'home' %}">Coin Collector</a></li>
         </ul>
-        <ul>
-          <li><a href="/about">About</a></li>
-          <li><a href="/coins">View All Coins</a></li>
+        <ul class="flex items-center justify-around row">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'coins_create' %}">Add a Coin</a></li>
+          <li><a href="{% url 'index' %}">View All Coins</a></li>
         </ul>
       </div>
     </nav>
   </header>
-  <main>
+  <main class="flex-1">
     {% block content %}
     {% endblock %}
   </main>
