@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Coin
+from .forms import PurchaseForm
 
 """
 coins = [
@@ -25,7 +26,20 @@ def coins_index(request):
 
 def coins_detail(request, coin_id):
     coin = Coin.objects.get(id=coin_id)
-    return render(request, 'coins/detail.html', {'coin': coin})
+    purchase_form = PurchaseForm()
+    return render(request, 'coins/detail.html', {
+        'coin': coin,
+        'purchase_form': purchase_form,
+    })
+
+def add_purchase(request, pk):
+    form = PurchaseForm(request.POST)
+
+    if form.is_valid():
+        new_purchase = form.save(commit=False)
+        new_purchase.coin_id = pk
+        new_purchase.save()
+    return redirect('detail', coin_id=pk)
 
 class CoinCreate(CreateView):
   model = Coin

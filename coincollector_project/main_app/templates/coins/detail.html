@@ -1,17 +1,42 @@
 {% extends 'coins/base.html' %}
 {% block content %}
 <h1 class="text-4xl mb-10 ml-8 mt-5">Coin Details</h1>
+<div>
+    <div>
+        <span><h3>{{ coin.name }}</h3></span>
+        <p>{{ coin.symbol }}</p>
+        <p>${{ coin.price }}</p></p>
+        <p>{{ coin.description }}</p>
+    </div>
+    <div>
+        <a href="{% url 'coins_update' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Edit</a>
+        <a href="{% url 'coins_delete' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Delete</a>
+    </div>
+    <div>
+        <form action="{% url 'add_purchase' coin.id %}"  method="POST">
+            {% csrf_token %}
+            <!-- Render the inputs -->
+            {{ purchase_form.as_p }}
+            <input type="submit" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded" value="Add Purchase">
+        </form>
+        
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Dollar Amount</th><th>Coin Amount</th></tr>
+          </thead>
+          <tbody>
+            {% for purchase in coin.purchase_set.all %}
+              <tr>
+                <td>{{purchase.date}}</td>
+                <td>{{purchase.coin_amount}}</td>
+                <td>{{purchase.dollar_amount}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>        
+</div>
 
-<div>
-    <span><h3>{{ coin.name }}</h3></span>
-    <p>{{ coin.symbol }}</p>
-    <p>${{ coin.price }}</p></p>
-    <p>{{ coin.description }}</p>
-</div>
-<div>
-    <a href="{% url 'coins_update' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Edit</a>
-    <a href="{% url 'coins_delete' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Delete</a>
-</div>
 
 
 {% endblock %}

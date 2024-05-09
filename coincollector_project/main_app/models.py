@@ -13,3 +13,17 @@ class Coin(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'coin_id': self.id})
+
+class Purchase(models.Model):
+    date = models.DateField()
+    dollar_amount = models.FloatField()
+    coin_amount = models.FloatField()
+
+    # coin_id FK
+    coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.coin_amount} on {self.date}'
+    
+    class Meta:
+        ordering = ['-date']
