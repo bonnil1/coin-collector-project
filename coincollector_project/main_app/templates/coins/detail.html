@@ -1,26 +1,25 @@
 {% extends 'coins/base.html' %}
 {% block content %}
-<h1 class="text-4xl mb-10 ml-8 mt-5">Coin Details</h1>
 <div>
     <div>
-        <span><h3>{{ coin.name }}</h3></span>
+        <span><h3 class="text-2xl font-semibold">{{ coin.name }}</h3></span>
         <p>{{ coin.symbol }}</p>
         <p>${{ coin.price }}</p></p>
         <p>{{ coin.description }}</p>
     </div>
-    <div>
+    <div class="mt-5">
         <a href="{% url 'coins_update' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Edit</a>
         <a href="{% url 'coins_delete' coin.id %}" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Delete</a>
     </div>
     <div>
-        <form action="{% url 'add_purchase' coin.id %}"  method="POST">
+        <form action="{% url 'add_purchase' coin.id %}"  method="POST" class="mt-10">
             {% csrf_token %}
             <!-- Render the inputs -->
             {{ purchase_form.as_p }}
-            <input type="submit" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded" value="Add Purchase">
+            <input type="submit" class="text-lg font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-2 px-4 border border-black hover:border-transparent rounded mt-5" value="Add Purchase">
         </form>
         
-        <table>
+        <table class="mt-10">
           <thead>
             <tr><th>Date</th><th>Dollar Amount</th><th>Coin Amount</th></tr>
           </thead>
@@ -34,7 +33,45 @@
             {% endfor %}
           </tbody>
         </table>
-      </div>        
+      </div> 
+      <div>
+        <h3 class="text-xl mt-5 font-semibold">{{ coin.name }}'s Investors</h3>
+        {% if coin.investors.count %}
+          {% for investor in coin.investors.all %}
+            <div>
+                <span>
+                    {{ investor.name }}
+                </span>
+            </div>
+            <div>
+                <form action="{% url 'assoc_delete' coin.id investor.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="text-md font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-1 px-2 border border-black hover:border-transparent rounded mt-5">Remove</button>
+                </form>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h5>No Investors</h5>
+        {% endif %}
+    </div>
+    <h3 class="text-xl mt-5 font-semibold">Available Investors</h3>
+  {% if investors.count %}
+    {% for investor in investors.all %}
+        <div>
+          <span>
+            {{ investor.name }}
+          </span>
+        </div>
+        <div>
+          <form action="{% url 'assoc_investor' coin.id investor.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="text-md font-semibold bg-blue-600 hover:bg-blue-800 text-black hover:text-white py-1 px-2 border border-black hover:border-transparent rounded">Add</button>
+          </form>
+        </div>
+    {% endfor %}
+  {% else %}
+    <h5>{{coin.name}} Has All Investors Available</h5>
+  {% endif %}
 </div>
 
 

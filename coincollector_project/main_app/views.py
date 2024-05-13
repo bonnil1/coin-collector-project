@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Coin
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
+from .models import Coin, Investor
 from .forms import PurchaseForm
 
 """
@@ -26,10 +26,14 @@ def coins_index(request):
 
 def coins_detail(request, coin_id):
     coin = Coin.objects.get(id=coin_id)
+    investors = Investor
+    id_list = coin.investors.all().values_list('id')
+    investors_not = Investor.objects.exclude(id__in=id_list)
     purchase_form = PurchaseForm()
     return render(request, 'coins/detail.html', {
         'coin': coin,
         'purchase_form': purchase_form,
+        'investors': investors_not,
     })
 
 def add_purchase(request, pk):
@@ -39,6 +43,14 @@ def add_purchase(request, pk):
         new_purchase = form.save(commit=False)
         new_purchase.coin_id = pk
         new_purchase.save()
+    return redirect('detail', coin_id=pk)
+
+def assoc_investor(request, pk, investor_pk):
+  Coin.objects.get(id=pk).investors.add(investor_pk)
+  return redirect('detail', coin_id=pk)
+
+def assoc_delete(request, pk, investor_pk):
+    Coin.objects.get(id=pk).investors.remove(investor_pk)
     return redirect('detail', coin_id=pk)
 
 class CoinCreate(CreateView):
@@ -52,3 +64,22 @@ class CoinUpdate(UpdateView):
 class CoinDelete(DeleteView):
   model = Coin
   success_url = '/coins'
+
+class InvestorList(ListView):
+  model = Investor
+
+class InvestorDetail(DetailView):
+  model = Investor
+
+class InvestorCreate(CreateView):
+  model = Investor
+  fields = ['name']
+
+class InvestorUpdate(UpdateView):
+  model = Investor
+  fields = ['name']
+
+class InvestorDelete(DeleteView):
+  model = Investor
+  success_url = '/investors'
+

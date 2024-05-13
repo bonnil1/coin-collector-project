@@ -2,11 +2,22 @@ from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+
+class Investor(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('coins_detail', kwargs={'pk': self.id})
+        
 class Coin(models.Model):
     name = models.CharField(max_length=50)
     symbol = models.CharField(max_length=50)
     price = models.FloatField()
     description = models.TextField(max_length=250)
+    investors = models.ManyToManyField(Investor)
 
     def __str__(self):
         return self.name
